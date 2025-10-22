@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutriCore.Models", "Models\NutriCore.Models.csproj", "{D16E0ACF-E916-49EC-B7BE-F41DA593ABDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutriCore.Data", "Data\NutriCore.Data.csproj", "{4A329CE1-5BB2-43CB-B669-5095FF473337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutriCore.Business", "Business\NutriCore.Business.csproj", "{89DD4F2D-0624-45DB-B9A5-1DDCC302525C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NutriCore.API", "API\NutriCore.API.csproj", "{A15ED9A7-2727-4843-8DE1-2C015E419217}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D16E0ACF-E916-49EC-B7BE-F41DA593ABDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16E0ACF-E916-49EC-B7BE-F41DA593ABDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16E0ACF-E916-49EC-B7BE-F41DA593ABDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16E0ACF-E916-49EC-B7BE-F41DA593ABDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A329CE1-5BB2-43CB-B669-5095FF473337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A329CE1-5BB2-43CB-B669-5095FF473337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A329CE1-5BB2-43CB-B669-5095FF473337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A329CE1-5BB2-43CB-B669-5095FF473337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DD4F2D-0624-45DB-B9A5-1DDCC302525C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DD4F2D-0624-45DB-B9A5-1DDCC302525C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DD4F2D-0624-45DB-B9A5-1DDCC302525C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DD4F2D-0624-45DB-B9A5-1DDCC302525C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15ED9A7-2727-4843-8DE1-2C015E419217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15ED9A7-2727-4843-8DE1-2C015E419217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15ED9A7-2727-4843-8DE1-2C015E419217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15ED9A7-2727-4843-8DE1-2C015E419217}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
