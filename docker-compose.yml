@@ -1,0 +1,33 @@
+networks:
+    nutricore:    
+        driver: bridge  
+
+volumes:
+    db-data:
+ 
+services:
+    db:
+        image: mcr.microsoft.com/mssql/server:2019-CU21-ubuntu-20.04
+        restart: always
+        ports:
+            - 6474:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=a24746@svalero.com
+        networks:
+            - nutricore
+        volumes:
+            - db-data:/var/opt/mssql
+    api:
+        restart: unless-stopped 
+        ports:
+            - 4746:80
+        environment:
+            - ASPNETCORE_URLS=http://0.0.0.0:80
+        build:
+          context: .
+          dockerfile: API/Dockerfile
+        depends_on:
+            - db
+        networks:
+            - nutricore
