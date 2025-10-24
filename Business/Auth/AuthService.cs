@@ -35,27 +35,23 @@ public class AuthService : IAuthService
 
     public string GenerateJwtToken(User user)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var secretKey = _configuration["JWT:SecretKey"];
-        var key = Encoding.UTF8.GetBytes(secretKey ?? throw new InvalidOperationException("JWT SecretKey is not configured.")); 
-        
-        var claims = new List<Claim>
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Role, user.Role)
         };
 
-        if (!string.IsNullOrWhiteSpace(user.Email))
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.UtcNow.AddDays(30),
+            signingCredentials: creds
+        );
 
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddDays(30),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     public bool HasAccessToResource(int? requestedUserID, string requestedUserEmail, ClaimsPrincipal user) 
@@ -79,14 +75,13 @@ public class AuthService : IAuthService
         {
             var emailClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
 
-            var isOwnResource = emailClaim != null && emailClaim.Value.Equals(requestedUserEmail.Trim(), StringComparison.OrdinalIgnoreCase);
+            var isOwnResource = emailClaim?.Value.Equals(requestedUserEmail, StringComparison.OrdinalIgnoreCase) ?? false;
 
             var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
             var isAdmin = roleClaim != null && roleClaim.Value == Roles.Admin;
 
             return isOwnResource || isAdmin;
         }
-        
         return false;
     }
 }

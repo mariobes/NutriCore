@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register([FromBody] UserCreateUpdateDto dto)
     {
-        if (!ModelState.IsValid)  {return BadRequest(ModelState); } 
+        if (!ModelState.IsValid)  { return BadRequest(ModelState); } 
 
         try 
         {
