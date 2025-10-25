@@ -5,7 +5,7 @@ namespace NutriCore.Models;
 public class UserCreateUpdateDto
 {
     [Required(ErrorMessage = "Name is required")]
-    [StringLength(30, ErrorMessage = "Name must be less than 30 characters")]
+    [StringLength(50, ErrorMessage = "Name must be less than 30 characters")]
     public string? Name { get; set; }
 
     [Required(ErrorMessage = "Email is required")]

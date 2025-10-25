@@ -11,10 +11,10 @@ namespace NutriCore.Business;
 
 public class AuthService : IAuthService
 {
-    private readonly IGenericRepository<User> _repository;
+    private readonly IUserRepository _repository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IGenericRepository<User> repository, IConfiguration configuration)
+    public AuthService(IUserRepository repository, IConfiguration configuration)
     {
         _repository = repository;
         _configuration = configuration;
@@ -23,7 +23,7 @@ public class AuthService : IAuthService
     public User CheckLogin(string email, string password)
     {
         var normalizedEmail = email.Trim().ToLower();
-        var user = _repository.GetEntityByEmail(normalizedEmail);
+        var user = _repository.GetUserByEmail(normalizedEmail);
 
         if (user == null || !PasswordHasher.Verify(password, user.Password))
         {

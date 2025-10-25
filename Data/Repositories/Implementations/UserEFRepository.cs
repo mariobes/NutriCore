@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NutriCore.Data;
 
-public class UserEFRepository : IGenericRepository<User>
+public class UserEFRepository : IUserRepository
 {
     private readonly NutriCoreContext _context;
 
@@ -28,7 +28,7 @@ public class UserEFRepository : IGenericRepository<User>
         return _context.Users.FirstOrDefault(u => u.Id == entityId);
     }
 
-    public User? GetEntityByEmail(string email)
+    public User? GetUserByEmail(string email)
     {
         return _context.Users.FirstOrDefault(u => u.Email == email);
     }
@@ -44,7 +44,7 @@ public class UserEFRepository : IGenericRepository<User>
         _context.Users.Remove(entity);
         SaveChanges();
     }
-    
+
     public void SaveChanges()
     {
         _context.SaveChanges();
