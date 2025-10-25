@@ -6,9 +6,9 @@ namespace NutriCore.Business;
 
 public class UserService : IUserService
 {
-    private readonly IGenericRepository<User> _repository;
+    private readonly IUserRepository _repository;
 
-    public UserService(IGenericRepository<User> repository)
+    public UserService(IUserRepository repository)
     {
         _repository = repository;
     }
@@ -16,7 +16,7 @@ public class UserService : IUserService
     public User RegisterUser(UserCreateUpdateDto dto)
     {
         var normalizedEmail = dto.Email.Trim().ToLower();
-        var registeredUserEmail = _repository.GetEntityByEmail(normalizedEmail);
+        var registeredUserEmail = _repository.GetUserByEmail(normalizedEmail);
         if (registeredUserEmail != null)
         {
             throw new Exception("The email address is already registered.");
@@ -53,7 +53,7 @@ public class UserService : IUserService
 
     public User GetUserByEmail(string email)
     {
-        var user = _repository.GetEntityByEmail(email);
+        var user = _repository.GetUserByEmail(email);
         if (user == null)
         {
             throw new KeyNotFoundException($"User with email {email} not found.");
@@ -74,7 +74,7 @@ public class UserService : IUserService
             var normalizedEmail = dto.Email.Trim().ToLower();
             if (!string.Equals(user.Email, normalizedEmail, StringComparison.OrdinalIgnoreCase))
             {
-                var registeredUserEmail = _repository.GetEntityByEmail(normalizedEmail);
+                var registeredUserEmail = _repository.GetUserByEmail(normalizedEmail);
                 if (registeredUserEmail != null)
                 {
                     throw new Exception("The email address is already registered.");

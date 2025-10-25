@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NutriCore.Business;
 using NutriCore.Data;
-using NutriCore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,11 +21,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IGenericRepository<User>, UserEFRepository>();
+builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<IUserRepository, UserEFRepository>();
+builder.Services.AddScoped<IFoodRepository, FoodEFRepository>();
 
-var connectionString = builder.Configuration.GetConnectionString("ServerDB_dockernet");
+var connectionString = builder.Configuration.GetConnectionString("ServerDB_localhost");
 
 builder.Services.AddDbContext<NutriCoreContext>(options => options.UseSqlServer(connectionString));
 
