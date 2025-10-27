@@ -25,8 +25,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IUserRepository, UserEFRepository>();
 builder.Services.AddScoped<IFoodRepository, FoodEFRepository>();
+builder.Services.AddScoped<IMealRepository, MealEFRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("ServerDB_localhost");
 
@@ -44,7 +46,14 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = 
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+
+        options.JsonSerializerOptions.MaxDepth = 64;
+    });
 
 builder.Services.AddHttpClient();
 
