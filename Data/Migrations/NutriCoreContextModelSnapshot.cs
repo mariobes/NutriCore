@@ -78,7 +78,7 @@ namespace NutriCore.Data.Migrations
                             Carbohydrates = 0.0,
                             CreatedBy = "Admin",
                             Fats = 91.0,
-                            Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ffinditapp.es%2Fproduct%2F21545%2Faceite-de-oliva-virgen-extra-hacendado&psig=AOvVaw3lJleOAYGiYoGiu_nXPnVO&ust=1761502309066000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPDws8_5v5ADFQAAAAAdAAAAABAE",
+                            Image = "https://dx7csy7aghu7b.cloudfront.net/prods/7567722.webp",
                             Kilocalories = 822,
                             MeasurementQuantity = 100,
                             Name = "Aceite de oliva virgen extra Hacendado",
@@ -94,7 +94,7 @@ namespace NutriCore.Data.Migrations
                             Carbohydrates = 4.5999999999999996,
                             CreatedBy = "Admin",
                             Fats = 3.6000000000000001,
-                            Image = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsuper.facua.org%2Fmercadona%2Fleche%2Fleche-entera-hacendado-1-l%2F&psig=AOvVaw3kHUfgmwIYi6NkahqgqyVE&ust=1761502634457000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPCF0Or6v5ADFQAAAAAdAAAAABAE",
+                            Image = "https://prod-mercadona.imgix.net/images/40d2c64941b80f76dce672a3eab794a2.jpg?fit=crop&h=600&w=600",
                             Kilocalories = 63,
                             MeasurementQuantity = 100,
                             Name = "Leche entera Hacendado",
@@ -103,6 +103,85 @@ namespace NutriCore.Data.Migrations
                             Sugar = 4.5999999999999996,
                             UnitOfMeasurement = 1,
                             UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("NutriCore.Models.Meal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Meals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "Admin",
+                            Image = "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg",
+                            Name = "Huevos rotos con jamón",
+                            UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("NutriCore.Models.MealIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FoodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("MealId");
+
+                    b.ToTable("MealIngredients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FoodId = 1,
+                            MealId = 1,
+                            Quantity = 10.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FoodId = 2,
+                            MealId = 1,
+                            Quantity = 50.0
                         });
                 });
 
@@ -172,6 +251,30 @@ namespace NutriCore.Data.Migrations
                             Role = "user",
                             Weight = 65
                         });
+                });
+
+            modelBuilder.Entity("NutriCore.Models.MealIngredient", b =>
+                {
+                    b.HasOne("NutriCore.Models.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NutriCore.Models.Meal", "Meal")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Meal");
+                });
+
+            modelBuilder.Entity("NutriCore.Models.Meal", b =>
+                {
+                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }
