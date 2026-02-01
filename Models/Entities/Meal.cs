@@ -21,15 +21,5 @@ public class Meal
     public List<MealIngredient> Ingredients { get; set; } = new List<MealIngredient>();
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? CreatedBy { get; set; } = "User";
-
-    public Meal() {}
-
-    public Meal(int userId, string name, string image, string createdBy)
-    {
-        UserId = userId;
-        Name = name;
-        Image = image;
-        CreatedBy = createdBy;
-    }
+    public string? CreatedBy { get; set; } = Roles.User;
 }

@@ -17,7 +17,7 @@ public class MealService : IMealService
     public Meal RegisterMeal(MealCreateUpdateDto dto)
     {
         var normalizedName = dto.Name.Trim().ToLower();
-        var registeredName = _mealRepository.GetAllEntities().FirstOrDefault(m => m.Name.ToLower() == normalizedName);
+        var registeredName = _mealRepository.GetEntities().FirstOrDefault(m => m.Name.ToLower() == normalizedName);
         if (registeredName != null)
         {
             throw new Exception("The name is already registered.");
@@ -41,14 +41,14 @@ public class MealService : IMealService
         return meal;
     }
 
-    public IEnumerable<Meal> GetAllMeals()
+    public IEnumerable<Meal> GetMeals()
     {
-        return _mealRepository.GetAllEntities();
+        return _mealRepository.GetEntities();
     }
 
-    public IEnumerable<Meal> GetAllMealsByUser(int userId)
+    public IEnumerable<Meal> GetMealsByUser(int userId)
     {
-        return _mealRepository.GetAllMealsByUser(userId);
+        return _mealRepository.GetMealsByUser(userId);
     }
 
     public Meal GetMealById(int mealId, int userId)
@@ -59,9 +59,9 @@ public class MealService : IMealService
             throw new KeyNotFoundException($"Meal with ID {mealId} not found.");
         }
 
-        if (meal.UserId != userId && userId != 1)
+        if (userId != 1 && meal.UserId != userId && meal.UserId != 1)
         {
-            throw new UnauthorizedAccessException("You can only update your own meals.");
+            throw new UnauthorizedAccessException("You can only get your own meals.");
         }
 
         return meal;
@@ -75,7 +75,7 @@ public class MealService : IMealService
             throw new KeyNotFoundException($"Meal with ID {mealId} not found.");
         }
 
-        if (meal.UserId != dto.UserId && dto.UserId != 1)
+        if (dto.UserId != 1 && meal.UserId != dto.UserId)
         {
             throw new UnauthorizedAccessException("You can only update your own meals.");
         }
@@ -85,7 +85,7 @@ public class MealService : IMealService
             var normalizedName = dto.Name.Trim().ToLower();
             if (!string.Equals(meal.Name, normalizedName, StringComparison.OrdinalIgnoreCase))
             {
-                var registeredName = _mealRepository.GetAllEntities().FirstOrDefault(m => m.Name.ToLower() == normalizedName);
+                var registeredName = _mealRepository.GetEntities().FirstOrDefault(m => m.Name.ToLower() == normalizedName);
                 if (registeredName != null)
                 {
                     throw new Exception("The name is already registered.");
@@ -128,7 +128,7 @@ public class MealService : IMealService
             throw new KeyNotFoundException($"Meal with ID {mealId} not found.");
         }
 
-        if (meal.UserId != userId && userId != 1)
+        if (userId != 1 && meal.UserId != userId)
         {
             throw new UnauthorizedAccessException("You can only delete your own meals.");
         }

@@ -28,39 +28,20 @@ public class Food
     public int Kilocalories { get; set; }
 
     [Required]
-    public double Fats { get; set; }
+    public double? Fats { get; set; }
 
     [Required]
-    public double Carbohydrates { get; set; }
+    public double? Carbohydrates { get; set; }
 
     [Required]
-    public double Proteins { get; set; }
+    public double? Proteins { get; set; }
 
     [Required]
-    public double Sugar { get; set; }
+    public double? Sugar { get; set; }
 
     [Required]
-    public double Salt { get; set; }
+    public double? Salt { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? CreatedBy { get; set; } = "User";
-
-    public Food() {}
-
-    public Food(int userId, string name, string image, EnumUnitOfMeasurementOptions unitOfMeasurement, int measurementQuantity,
-                int kilocalories, double fats, double carbohydrates, double proteins, double sugar, double salt, string createdBy)
-    {
-        UserId = userId;
-        Name = name;
-        Image = image;
-        UnitOfMeasurement = unitOfMeasurement;
-        MeasurementQuantity = measurementQuantity;
-        Kilocalories = kilocalories;
-        Fats = fats;
-        Carbohydrates = carbohydrates;
-        Proteins = proteins;
-        Sugar = sugar;
-        Salt = salt;
-        CreatedBy = createdBy;
-    }
+    public string? CreatedBy { get; set; } = Roles.User;
 }

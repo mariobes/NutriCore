@@ -36,9 +36,9 @@ public class UserService : IUserService
         return user;
     }
 
-    public IEnumerable<User> GetAllUsers()
+    public IEnumerable<User> GetUsers()
     {
-        return _repository.GetAllEntities();
+        return _repository.GetEntities();
     }
 
     public User GetUserById(int userId)

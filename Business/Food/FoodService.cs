@@ -15,7 +15,7 @@ public class FoodService : IFoodService
     public Food RegisterFood(FoodCreateUpdateDto dto)
     {
         var normalizedName = dto.Name.Trim().ToLower();
-        var registeredName = _repository.GetAllEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
+        var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
         if (registeredName != null)
         {
             throw new Exception("The name is already registered.");
@@ -39,14 +39,14 @@ public class FoodService : IFoodService
         return food;
     }
 
-    public IEnumerable<Food> GetAllFoods()
+    public IEnumerable<Food> GetFoods()
     {
-        return _repository.GetAllEntities();
+        return _repository.GetEntities();
     }
 
-    public IEnumerable<Food> GetAllFoodsByUser(int userId)
+    public IEnumerable<Food> GetFoodsByUser(int userId)
     {
-        return _repository.GetAllFoodsByUser(userId);
+        return _repository.GetFoodsByUser(userId);
     }
 
     public Food GetFoodById(int foodId, int userId)
@@ -57,9 +57,9 @@ public class FoodService : IFoodService
             throw new KeyNotFoundException($"Food with ID {foodId} not found.");
         }
 
-        if (food.UserId != userId && userId != 1)
+        if (userId != 1 && food.UserId != userId && food.UserId != 1)
         {
-            throw new UnauthorizedAccessException("You can only update your own foods.");
+            throw new UnauthorizedAccessException("You can only get your own foods.");
         }
 
         return food;
@@ -73,7 +73,7 @@ public class FoodService : IFoodService
             throw new KeyNotFoundException($"Food with ID {foodId} not found.");
         }
 
-        if (food.UserId != dto.UserId && dto.UserId != 1)
+        if (dto.UserId != 1 && food.UserId != dto.UserId)
         {
             throw new UnauthorizedAccessException("You can only update your own foods.");
         }
@@ -83,7 +83,7 @@ public class FoodService : IFoodService
             var normalizedName = dto.Name.Trim().ToLower();
             if (!string.Equals(food.Name, normalizedName, StringComparison.OrdinalIgnoreCase))
             {
-                var registeredName = _repository.GetAllEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
+                var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
                 if (registeredName != null)
                 {
                     throw new Exception("The name is already registered.");
@@ -114,7 +114,7 @@ public class FoodService : IFoodService
             throw new KeyNotFoundException($"Food with ID {foodId} not found.");
         }
 
-        if (food.UserId != userId && userId != 1)
+        if (userId != 1 && food.UserId != userId)
         {
             throw new UnauthorizedAccessException("You can only delete your own foods.");
         }

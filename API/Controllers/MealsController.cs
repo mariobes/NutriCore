@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Authorization;
 namespace NutriCore.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("users/{userId}/meals")]
 public class MealsController : ControllerBase
 {
     private readonly IMealService _mealService;
     private readonly IAuthService _authService;
+    private readonly IUserService _userService;
 
-    public MealsController(IMealService mealService, IAuthService authService)
+    public MealsController(IMealService mealService, IAuthService authService, IUserService userService)
     {
         _mealService = mealService;
         _authService = authService;
+        _userService = userService;
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
@@ -30,7 +32,7 @@ public class MealsController : ControllerBase
         try 
         {
             var meal = _mealService.RegisterMeal(dto);
-            return CreatedAtAction(nameof(GetMealById), new { mealId = meal.Id }, meal);
+            return CreatedAtAction(nameof(GetMealById), new { userId = dto.UserId, mealId = meal.Id }, meal);
         }     
         catch (Exception ex)
         {
@@ -39,12 +41,12 @@ public class MealsController : ControllerBase
     }
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpGet]
-    public ActionResult<IEnumerable<Meal>> GetAllMeals()
+    [HttpGet("/meals")]
+    public ActionResult<IEnumerable<Meal>> GetMeals()
     {
         try
         {
-            var meals = _mealService.GetAllMeals();
+            var meals = _mealService.GetMeals();
             return Ok(meals);
         }
         catch (Exception ex)
@@ -54,20 +56,25 @@ public class MealsController : ControllerBase
     }
     
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
-    [HttpGet("user/{userId}")]
-    public ActionResult<IEnumerable<Meal>> GetAllMealsByUser(int userId)
+    [HttpGet]
+    public ActionResult<IEnumerable<Meal>> GetMealsByUser(int userId)
     {
-        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+        var requestedUser = _userService.GetUserById(userId);
+
+        if (requestedUser == null)
+            return NotFound();
+
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User, requestedUser.Role)) 
             { return Forbid(); }
 
         try 
         {
-            var meals = _mealService.GetAllMealsByUser(userId);
+            var meals = _mealService.GetMealsByUser(userId);
             return Ok(meals);
         }     
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving all meals for user with ID: {userId}. {ex.Message}");
+            return BadRequest($"Error retrieving all meals for user with ID {userId}. {ex.Message}");
 
         }
     }
@@ -76,7 +83,12 @@ public class MealsController : ControllerBase
     [HttpGet("{mealId}")]
     public IActionResult GetMealById(int mealId, int userId)
     {
-        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+        var requestedUser = _userService.GetUserById(userId);
+
+        if (requestedUser == null)
+            return NotFound();
+
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User, requestedUser.Role)) 
             { return Forbid(); }
 
         try
@@ -86,11 +98,11 @@ public class MealsController : ControllerBase
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Meal with ID: {mealId} was not found. {knfex.Message}");
+            return NotFound($"Meal with ID {mealId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving meal with ID: {mealId}. {ex.Message}");
+            return BadRequest($"Error retrieving meal with ID {mealId}. {ex.Message}");
         }
     }
 
@@ -110,11 +122,11 @@ public class MealsController : ControllerBase
         }     
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Meal with ID: {mealId} was not found. {knfex.Message}");
+            return NotFound($"Meal with ID {mealId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error updating meal with ID: {mealId}. {ex.Message}");
+            return BadRequest($"Error updating meal with ID {mealId}. {ex.Message}");
         }
     }
 
@@ -132,11 +144,11 @@ public class MealsController : ControllerBase
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Meal with ID: {mealId} was not found. {knfex.Message}");
+            return NotFound($"Meal with ID {mealId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error deleting meal with ID: {mealId}. {ex.Message}");
+            return BadRequest($"Error deleting meal with ID {mealId}. {ex.Message}");
         }
     }
 }

@@ -54,34 +54,30 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public bool HasAccessToResource(int? requestedUserID, string requestedUserEmail, ClaimsPrincipal user) 
+    public bool HasAccessToResource(int? requestedUserID, string? requestedUserEmail, ClaimsPrincipal user, string? requestedUserRole = null) 
     {
-        if (requestedUserID.HasValue)
-        {
-            var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            if (userIdClaim is null || !int.TryParse(userIdClaim.Value, out int userId)) 
-            { 
-                return false; 
-            }
-            var isOwnResource = userId == requestedUserID;
+        var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        var userEmailClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+        var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+        
+        if (userIdClaim is null || roleClaim is null || !int.TryParse(userIdClaim.Value, out int userId)) 
+            return false;
 
-            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-            var isAdmin = roleClaim != null && roleClaim.Value == Roles.Admin;
-            
-            var hasAccess = isOwnResource || isAdmin;
-            return hasAccess;
-        }
-        else if (!string.IsNullOrEmpty(requestedUserEmail))
-        {
-            var emailClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+        var userRole = roleClaim.Value;
+        var userEmail = userEmailClaim?.Value;
+        
+        if (userRole == Roles.Admin) 
+            return true;
 
-            var isOwnResource = emailClaim?.Value.Equals(requestedUserEmail, StringComparison.OrdinalIgnoreCase) ?? false;
+        if (requestedUserID.HasValue && requestedUserID.Value == userId)
+            return true;
 
-            var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-            var isAdmin = roleClaim != null && roleClaim.Value == Roles.Admin;
+        if (!string.IsNullOrEmpty(requestedUserEmail) && requestedUserEmail.Equals(userEmail))
+            return true;
 
-            return isOwnResource || isAdmin;
-        }
+        if (!string.IsNullOrEmpty(requestedUserRole) && requestedUserRole == Roles.Admin)
+            return true;
+
         return false;
     }
 }

@@ -20,11 +20,17 @@ public class UsersController : ControllerBase
 
     [Authorize(Roles = Roles.Admin)]
     [HttpGet]
-    public ActionResult<IEnumerable<User>> GetAllUsers()
+    public ActionResult<IEnumerable<User>> GetUsers([FromQuery] string? email)
     {
         try 
         {
-            var users = _userService.GetAllUsers();
+            if (!string.IsNullOrEmpty(email))
+            {
+                var user = _userService.GetUserByEmail(email);
+                return Ok(new List<User> { user });
+            }
+
+            var users = _userService.GetUsers();
             return Ok(users);
         }     
         catch (Exception ex)
@@ -48,20 +54,20 @@ public class UsersController : ControllerBase
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"User with ID: {userId} was not found. {knfex.Message}");
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving user with ID: {userId}. {ex.Message}");
+            return BadRequest($"Error retrieving user with ID {userId}. {ex.Message}");
         }
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
     [HttpGet("by-email")]
-    public IActionResult GetUserByEmail(string email)
+    public IActionResult GetUserByEmai(string email)
     {
         if (!_authService.HasAccessToResource(null, email, HttpContext.User)) 
-            { return Forbid(); }
+            {return Forbid(); }
 
         try
         {
@@ -70,11 +76,11 @@ public class UsersController : ControllerBase
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"User with email: {email} was not found. {knfex.Message}");
+            return NotFound($"User with email {email} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving user with email: {email}. {ex.Message}");
+            return BadRequest($"Error retrieving user with email {email}. {ex.Message}");
         }
     }
 
@@ -94,11 +100,11 @@ public class UsersController : ControllerBase
         }     
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"User with ID: {userId} was not found. {knfex.Message}");
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error updating user with ID: {userId}. {ex.Message}");
+            return BadRequest($"Error updating user with ID {userId}. {ex.Message}");
         }
     }
 
@@ -116,11 +122,11 @@ public class UsersController : ControllerBase
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"User with ID: {userId} was not found. {knfex.Message}");
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error deleting user with ID: {userId}. {ex.Message}");
+            return BadRequest($"Error deleting user with ID {userId}. {ex.Message}");
         }
     }
 }
