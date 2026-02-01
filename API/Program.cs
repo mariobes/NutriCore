@@ -17,22 +17,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
         };
     });
-
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
 builder.Services.AddScoped<IMealService, MealService>();
-builder.Services.AddScoped<IUserRepository, UserEFRepository>();
-builder.Services.AddScoped<IFoodRepository, FoodEFRepository>();
-builder.Services.AddScoped<IMealRepository, MealEFRepository>();
 
-var connectionString = builder.Configuration.GetConnectionString("ServerDB_localhost");
+var useJson = builder.Configuration.GetValue<bool>("UseJsonData");
 
-builder.Services.AddDbContext<NutriCoreContext>(options => options.UseSqlServer(connectionString));
+if (!useJson)
+{
+    builder.Services.AddScoped<IUserRepository, UserEFRepository>();
+    builder.Services.AddScoped<IFoodRepository, FoodEFRepository>();
+    builder.Services.AddScoped<IMealRepository, MealEFRepository>();
+
+    var connectionString = builder.Configuration.GetConnectionString("ServerDB_dockernet");
+    builder.Services.AddDbContext<NutriCoreContext>(options => options.UseSqlServer(connectionString));
+}
+else
+{
+    builder.Services.AddScoped<IUserRepository, UserJsonRepository>();
+    builder.Services.AddScoped<IFoodRepository, FoodJsonRepository>();
+    builder.Services.AddScoped<IMealRepository, MealJsonRepository>();
+}
 
 // Configure CORS to allow all requests
 builder.Services.AddCors(options =>
@@ -46,14 +56,16 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = 
-            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+// builder.Services.AddControllers()
+//     .AddJsonOptions(options =>
+//     {
+//         options.JsonSerializerOptions.ReferenceHandler = 
+//             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 
-        options.JsonSerializerOptions.MaxDepth = 64;
-    });
+//         options.JsonSerializerOptions.MaxDepth = 64;
+//     });
+
+builder.Services.AddControllers();
 
 builder.Services.AddHttpClient();
 
@@ -89,6 +101,16 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+if (!useJson)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<NutriCoreContext>();
+        context.Database.Migrate();
+    }
+}
 
 // Configure CORS
 app.UseCors("MyAllowedOrigins");

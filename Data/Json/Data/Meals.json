@@ -1,0 +1,21 @@
+[
+  {
+    "Id": 1,
+    "UserId": 1,
+    "Name": "Huevos rotos con jamón",
+    "Image": "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg",
+    "Ingredients": [
+      {
+        "Id": 1,
+        "FoodId": 1,
+        "Quantity": 10
+      },
+      {
+        "Id": 2,
+        "FoodId": 2,
+        "Quantity": 50
+      }
+    ],
+    "CreatedBy": "admin"
+  }
+]

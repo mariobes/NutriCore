@@ -18,12 +18,12 @@ public class FoodEFRepository : IFoodRepository
         SaveChanges();
     }
 
-    public IEnumerable<Food> GetAllEntities()
+    public IEnumerable<Food> GetEntities()
     {
         return _context.Foods.ToList();
     }
 
-    public IEnumerable<Food> GetAllFoodsByUser(int userId)
+    public IEnumerable<Food> GetFoodsByUser(int userId)
     {
         return _context.Foods.Where(f => f.UserId == userId).ToList();
     }
