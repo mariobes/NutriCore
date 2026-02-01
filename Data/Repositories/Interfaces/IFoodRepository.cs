@@ -4,5 +4,5 @@ namespace NutriCore.Data;
 
 public interface IFoodRepository : IGenericRepository<Food>
 {
-    IEnumerable<Food> GetAllFoodsByUser(int userId);
+    IEnumerable<Food> GetFoodsByUser(int userId);
 }

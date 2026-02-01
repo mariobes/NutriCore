@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NutriCore.Models;
 
-public class User
+public class User // Ideal quitar required y ? para poner = ""; y además cambiar método de hashear contraseñas
 {
     [Key]
     public int Id { get; set; }
@@ -30,25 +30,11 @@ public class User
     [Required]
     public string? Country { get; set; }
 
-    [Required]
     public string Role { get; set; } = Roles.User;
-
-    public User() {}
-
-    public User(string name, string email, string password, int age, int height, int weight, string country) 
-    {
-        Name = name;
-        Email = email;
-        Password = password;
-        Age = age;
-        Height = height;
-        Weight = weight;
-        Country = country;
-    }
 
     public static class PasswordHasher
     {
-        public static string Hash(string? password)
+        public static string Hash(string password)
         {
             using (var sha256 = SHA256.Create())
             {

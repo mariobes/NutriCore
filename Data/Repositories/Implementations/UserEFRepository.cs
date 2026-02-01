@@ -18,7 +18,7 @@ public class UserEFRepository : IUserRepository
         SaveChanges();
     }
 
-    public IEnumerable<User> GetAllEntities()
+    public IEnumerable<User> GetEntities()
     {
         return _context.Users.ToList();
     }
@@ -33,9 +33,9 @@ public class UserEFRepository : IUserRepository
         return _context.Users.FirstOrDefault(u => u.Email == email);
     }
 
-    public void UpdateEntity(User user)
+    public void UpdateEntity(User entity)
     {
-        _context.Entry(user).State = EntityState.Modified;
+        _context.Entry(entity).State = EntityState.Modified;
         SaveChanges();
     }
 

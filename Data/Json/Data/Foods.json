@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "UserId": 1,
+    "Name": "Aceite de oliva virgen extra Hacendado",
+    "Image": "https://dx7csy7aghu7b.cloudfront.net/prods/7567722.webp",
+    "UnitOfMeasurement": "Milliliters",
+    "MeasurementQuantity": 100,
+    "Kilocalories": 822,
+    "Fats": 91,
+    "Carbohydrates": 0,
+    "Proteins": 0,
+    "Sugar": 0,
+    "Salt": 0,
+    "CreatedBy": "admin"
+  },
+  {
+    "Id": 2,
+    "UserId": 1,
+    "Name": "Leche entera Hacendado",
+    "Image": "https://prod-mercadona.imgix.net/images/40d2c64941b80f76dce672a3eab794a2.jpg?fit=crop&h=600&w=600",
+    "UnitOfMeasurement": "Milliliters",
+    "MeasurementQuantity": 100,
+    "Kilocalories": 63,
+    "Fats": 3.6,
+    "Carbohydrates": 4.6,
+    "Proteins": 3.1,
+    "Sugar": 4.6,
+    "Salt": 0.13,
+    "CreatedBy": "admin"
+  }
+]

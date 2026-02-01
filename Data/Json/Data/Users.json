@@ -1,0 +1,24 @@
+[
+  {
+    "Id": 1,
+    "Name": "Admin",
+    "Email": "admin@nutricore.com",
+    "Password": "YHrp/ExR53lRO6ouA2tT0y9QCb94jfjNBsxcGq5x798=",
+    "Age": 1,
+    "Height": 30,
+    "Weight": 1,
+    "Country": "España",
+    "Role": "admin"
+  },
+  {
+    "Id": 2,
+    "Name": "Mario",
+    "Email": "mario@gmail.com",
+    "Password": "JApd9lfG2wshq3agTXjgwVT/f4jQecLCYTBnBT30AqE=",
+    "Age": 24,
+    "Height": 170,
+    "Weight": 65,
+    "Country": "España",
+    "Role": "user"
+  }
+]

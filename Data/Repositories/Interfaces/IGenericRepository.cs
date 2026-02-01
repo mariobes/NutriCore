@@ -4,7 +4,7 @@ namespace NutriCore.Data;
 public interface IGenericRepository<T> where T : class
 {
     void AddEntity(T entity);
-    IEnumerable<T> GetAllEntities();
+    IEnumerable<T> GetEntities();
     T? GetEntityById(int entityId);
     void UpdateEntity(T entity);
     void DeleteEntity(T entity);

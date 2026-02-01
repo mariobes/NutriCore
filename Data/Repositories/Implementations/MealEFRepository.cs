@@ -18,12 +18,12 @@ public class MealEFRepository : IMealRepository
         SaveChanges();
     }
 
-    public IEnumerable<Meal> GetAllEntities()
+    public IEnumerable<Meal> GetEntities()
     {
         return _context.Meals.Include(m => m.Ingredients).ThenInclude(mi => mi.Food).ToList();
     }
 
-    public IEnumerable<Meal> GetAllMealsByUser(int userId)
+    public IEnumerable<Meal> GetMealsByUser(int userId)
     {
         return _context.Meals.Where(m => m.UserId == userId).Include(m => m.Ingredients).ThenInclude(mi => mi.Food).ToList();
     }
