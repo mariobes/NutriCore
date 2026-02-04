@@ -129,4 +129,72 @@ public class UsersController : ControllerBase
             return BadRequest($"Error deleting user with ID {userId}. {ex.Message}");
         }
     }
+
+    [Authorize(Roles = Roles.Admin + "," + Roles.User)]
+    [HttpPut("{userId}/water")]
+    public IActionResult UpdateDailyWater(int userId, double dailyWater)
+    {
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+            { return Forbid(); }
+
+        try 
+        {
+            _userService.UpdateDailyWater(userId, dailyWater);
+            return Ok("User daily water updated successfully.");
+        }     
+        catch (KeyNotFoundException knfex)
+        {
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error updating user daily water with ID {userId}. {ex.Message}");
+        }
+    }
+
+    [Authorize(Roles = Roles.Admin + "," + Roles.User)]
+    [HttpGet("{userId}/targets")]
+    public IActionResult GetTargets(int userId)
+    {
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+            { return Forbid(); }
+
+        try 
+        {
+            var targets =_userService.GetTargets(userId);
+            return Ok(targets);
+        }     
+        catch (KeyNotFoundException knfex)
+        {
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error retrieving user targets with ID {userId}. {ex.Message}");
+        }
+    }
+
+    [Authorize(Roles = Roles.Admin + "," + Roles.User)]
+    [HttpPut("{userId}/targets")]
+    public IActionResult UpdateTargets(int userId, UserTargetsDto dto)
+    {
+        if (!ModelState.IsValid)  { return BadRequest(ModelState); } 
+
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+            { return Forbid(); }
+
+        try 
+        {
+            _userService.UpdateTargets(userId, dto);
+            return Ok("User targets updated successfully.");
+        }     
+        catch (KeyNotFoundException knfex)
+        {
+            return NotFound($"User with ID {userId} was not found. {knfex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error updating user targets with ID {userId}. {ex.Message}");
+        }
+    }
 }

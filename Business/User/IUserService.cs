@@ -10,4 +10,7 @@ public interface IUserService
     User GetUserByEmail(string email);
     void UpdateUser(int userId, UserCreateUpdateDto dto);
     void DeleteUser(int userId);
+    void UpdateDailyWater(int userId, double dailyWater);
+    UserTargetsDto GetTargets(int userId);
+    void UpdateTargets(int userId, UserTargetsDto dto);
 }
