@@ -65,6 +65,12 @@ namespace NutriCore.Data.Migrations
                     Height = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DailyWater = table.Column<double>(type: "float", nullable: false),
+                    DailyKilocalorieTarget = table.Column<double>(type: "float", nullable: false),
+                    DailyFatTarget = table.Column<double>(type: "float", nullable: false),
+                    DailyCarbohydrateTarget = table.Column<double>(type: "float", nullable: false),
+                    DailyProteinTarget = table.Column<double>(type: "float", nullable: false),
+                    DailyWaterTarget = table.Column<double>(type: "float", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -115,11 +121,11 @@ namespace NutriCore.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Age", "Country", "Email", "Height", "Name", "Password", "Role", "Weight" },
+                columns: new[] { "Id", "Age", "Country", "DailyCarbohydrateTarget", "DailyFatTarget", "DailyKilocalorieTarget", "DailyProteinTarget", "DailyWater", "DailyWaterTarget", "Email", "Height", "Name", "Password", "Role", "Weight" },
                 values: new object[,]
                 {
-                    { 1, 1, "España", "admin@nutricore.com", 30, "Admin", "YHrp/ExR53lRO6ouA2tT0y9QCb94jfjNBsxcGq5x798=", "admin", 1 },
-                    { 2, 24, "España", "mario@gmail.com", 170, "Mario", "JApd9lfG2wshq3agTXjgwVT/f4jQecLCYTBnBT30AqE=", "user", 65 }
+                    { 1, 1, "España", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, "admin@nutricore.com", 30, "Admin", "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", "admin", 1 },
+                    { 2, 24, "España", 160.0, 60.0, 2300.0, 130.0, 1.5, 3.0, "mario@gmail.com", 170, "Mario", "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", "user", 65 }
                 });
 
             migrationBuilder.InsertData(

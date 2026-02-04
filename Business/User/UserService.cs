@@ -31,6 +31,11 @@ public class UserService : IUserService
             Height = dto.Height,
             Weight = dto.Weight,
             Country = dto.Country,
+            DailyWater = 0,
+            DailyKilocalorieTarget = 0,
+            DailyFatTarget = 0,
+            DailyCarbohydrateTarget = 0,
+            DailyProteinTarget = 0
         };
         _repository.AddEntity(user);
         return user;
@@ -105,5 +110,78 @@ public class UserService : IUserService
             throw new KeyNotFoundException($"User with ID {userId} not found.");
         }
         _repository.DeleteEntity(user);
+    }
+
+    public void UpdateDailyWater(int userId, double dailyWater)
+    {
+        var user = _repository.GetEntityById(userId);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with ID {userId} not found.");
+        }
+
+        if (dailyWater < 0 || dailyWater > 6)
+        {
+            throw new ArgumentOutOfRangeException("Daily water must be between 0 and 6 liters.");
+        }
+
+        user.DailyWater = dailyWater;
+        _repository.UpdateEntity(user);
+    }
+
+    public UserTargetsDto GetTargets(int userId)
+    {
+        var user = _repository.GetEntityById(userId);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with ID {userId} not found.");
+        }
+
+        var targets = new UserTargetsDto
+        {
+            DailyKilocalorieTarget = user.DailyKilocalorieTarget,
+            DailyFatTarget = user.DailyFatTarget,
+            DailyCarbohydrateTarget = user.DailyCarbohydrateTarget,
+            DailyProteinTarget = user.DailyProteinTarget,
+            DailyWaterTarget = user.DailyWaterTarget
+        };
+
+        return targets;
+    }
+
+    public void UpdateTargets(int userId, UserTargetsDto dto)
+    {
+        var user = _repository.GetEntityById(userId);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with ID {userId} not found.");
+        }
+
+        if (dto.DailyKilocalorieTarget.HasValue)
+        {
+            user.DailyKilocalorieTarget = dto.DailyKilocalorieTarget.Value;
+        }
+        
+        if (dto.DailyFatTarget.HasValue)
+        {
+            user.DailyFatTarget = dto.DailyFatTarget.Value;
+        }
+
+        if (dto.DailyCarbohydrateTarget.HasValue)
+        {
+            user.DailyCarbohydrateTarget = dto.DailyCarbohydrateTarget.Value;
+        }
+
+        if (dto.DailyProteinTarget.HasValue)
+        {
+            user.DailyProteinTarget = dto.DailyProteinTarget.Value;
+        }
+
+        if (dto.DailyWaterTarget.HasValue)
+        {
+            user.DailyWaterTarget = dto.DailyWaterTarget.Value;
+        }
+
+        _repository.UpdateEntity(user);
     }
 }

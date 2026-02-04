@@ -9,5 +9,8 @@ public enum EnumUnitOfMeasurementOptions
     Milliliters = 1,
 
     [Display(Name = "l")]
-    Liters = 2
+    Liters = 2,
+
+    [Display(Name = "ud")]
+    Unit = 3
 }
