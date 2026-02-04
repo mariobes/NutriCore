@@ -12,7 +12,7 @@ using NutriCore.Data;
 namespace NutriCore.Data.Migrations
 {
     [DbContext(typeof(NutriCoreContext))]
-    [Migration("20260110181505_InitialCreate")]
+    [Migration("20260204125710_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -210,6 +210,24 @@ namespace NutriCore.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("DailyCarbohydrateTarget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DailyFatTarget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DailyKilocalorieTarget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DailyProteinTarget")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DailyWater")
+                        .HasColumnType("float");
+
+                    b.Property<double>("DailyWaterTarget")
+                        .HasColumnType("float");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -242,10 +260,16 @@ namespace NutriCore.Data.Migrations
                             Id = 1,
                             Age = 1,
                             Country = "España",
+                            DailyCarbohydrateTarget = 0.0,
+                            DailyFatTarget = 0.0,
+                            DailyKilocalorieTarget = 0.0,
+                            DailyProteinTarget = 0.0,
+                            DailyWater = 0.0,
+                            DailyWaterTarget = 0.0,
                             Email = "admin@nutricore.com",
                             Height = 30,
                             Name = "Admin",
-                            Password = "YHrp/ExR53lRO6ouA2tT0y9QCb94jfjNBsxcGq5x798=",
+                            Password = "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=",
                             Role = "admin",
                             Weight = 1
                         },
@@ -254,10 +278,16 @@ namespace NutriCore.Data.Migrations
                             Id = 2,
                             Age = 24,
                             Country = "España",
+                            DailyCarbohydrateTarget = 160.0,
+                            DailyFatTarget = 60.0,
+                            DailyKilocalorieTarget = 2300.0,
+                            DailyProteinTarget = 130.0,
+                            DailyWater = 1.5,
+                            DailyWaterTarget = 3.0,
                             Email = "mario@gmail.com",
                             Height = 170,
                             Name = "Mario",
-                            Password = "JApd9lfG2wshq3agTXjgwVT/f4jQecLCYTBnBT30AqE=",
+                            Password = "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=",
                             Role = "user",
                             Weight = 65
                         });

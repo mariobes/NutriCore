@@ -16,8 +16,8 @@ public class NutriCoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Name = "Admin", Email = "admin@nutricore.com", Password = "YHrp/ExR53lRO6ouA2tT0y9QCb94jfjNBsxcGq5x798=", Age = 1, Height = 30, Weight = 1, Country = "España", Role = Roles.Admin },
-            new User { Id = 2, Name = "Mario", Email = "mario@gmail.com", Password = "JApd9lfG2wshq3agTXjgwVT/f4jQecLCYTBnBT30AqE=", Age = 24, Height = 170, Weight = 65, Country = "España" }
+            new User { Id = 1, Name = "Admin", Email = "admin@nutricore.com", Password = "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", Age = 1, Height = 30, Weight = 1, Country = "España", DailyWater = 0, DailyKilocalorieTarget = 0, DailyFatTarget = 0, DailyCarbohydrateTarget = 0, DailyProteinTarget = 0, DailyWaterTarget = 0, Role = Roles.Admin },
+            new User { Id = 2, Name = "Mario", Email = "mario@gmail.com", Password = "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", Age = 24, Height = 170, Weight = 65, Country = "España", DailyWater = 1.5, DailyKilocalorieTarget = 2300, DailyFatTarget = 60, DailyCarbohydrateTarget = 160, DailyProteinTarget = 130, DailyWaterTarget = 3 }
         );
 
         modelBuilder.Entity<Food>().HasData(
