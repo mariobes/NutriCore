@@ -25,6 +25,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
 builder.Services.AddScoped<IMealService, MealService>();
+builder.Services.AddScoped<IIntakeService, IntakeService>();
 
 var useJson = builder.Configuration.GetValue<bool>("UseJsonData");
 
@@ -33,6 +34,7 @@ if (!useJson)
     builder.Services.AddScoped<IUserRepository, UserEFRepository>();
     builder.Services.AddScoped<IFoodRepository, FoodEFRepository>();
     builder.Services.AddScoped<IMealRepository, MealEFRepository>();
+    builder.Services.AddScoped<IIntakeRepository, IntakeEFRepository>();
 
     var connectionString = builder.Configuration.GetConnectionString("ServerDB_dockernet");
     builder.Services.AddDbContext<NutriCoreContext>(options => options.UseSqlServer(connectionString));
@@ -42,6 +44,7 @@ else
     builder.Services.AddScoped<IUserRepository, UserJsonRepository>();
     builder.Services.AddScoped<IFoodRepository, FoodJsonRepository>();
     builder.Services.AddScoped<IMealRepository, MealJsonRepository>();
+    builder.Services.AddScoped<IIntakeRepository, IntakeJsonRepository>();
 }
 
 // Configure CORS to allow all requests

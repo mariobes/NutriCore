@@ -6,23 +6,23 @@ using Microsoft.AspNetCore.Authorization;
 namespace NutriCore.API.Controllers;
 
 [ApiController]
-[Route("Users/{userId}/foods")]
-public class FoodsController : ControllerBase
+[Route("Users/{userId}/intakes")]
+public class IntakesController : ControllerBase
 {
-    private readonly IFoodService _foodService;
+    private readonly IIntakeService _intakeService;
     private readonly IAuthService _authService;
     private readonly IUserService _userService;
 
-    public FoodsController(IFoodService foodService, IAuthService authService, IUserService userService)
+    public IntakesController(IIntakeService intakeService, IAuthService authService, IUserService userService)
     {
-        _foodService = foodService;
+        _intakeService = intakeService;
         _authService = authService;
         _userService = userService;
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
     [HttpPost]
-    public IActionResult CreateFood([FromBody] FoodCreateUpdateDto dto)
+    public IActionResult CreateIntake([FromBody] IntakeCreateUpdateDto dto)
     {
         if (!ModelState.IsValid) { return BadRequest(ModelState); } 
         
@@ -31,33 +31,33 @@ public class FoodsController : ControllerBase
 
         try 
         {
-            var food = _foodService.RegisterFood(dto);
-            return CreatedAtAction(nameof(GetFoodById), new { userId = dto.UserId, foodId = food.Id }, food);
+            var intake = _intakeService.RegisterIntake(dto);
+            return CreatedAtAction(nameof(GetIntakeById), new { userId = dto.UserId, intakeId = intake.Id }, intake);
         }     
         catch (Exception ex)
         {
-            return BadRequest($"Error registering food. {ex.Message}");
+            return BadRequest($"Error registering intake. {ex.Message}");
         }
     }
 
     [Authorize(Roles = Roles.Admin)]
-    [HttpGet("/foods")]
-    public ActionResult<IEnumerable<Food>> GetFoods()
+    [HttpGet("/intakes")]
+    public ActionResult<IEnumerable<Intake>> GetIntakes()
     {
         try
         {
-            var foods = _foodService.GetFoods();
-            return Ok(foods);
+            var intakes = _intakeService.GetIntakes();
+            return Ok(intakes);
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving all foods. {ex.Message}");
+            return BadRequest($"Error retrieving all intakes. {ex.Message}");
         }
     }
     
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
     [HttpGet]
-    public ActionResult<IEnumerable<Food>> GetFoodsByUser(int userId)
+    public ActionResult<IEnumerable<Intake>> GetIntakesByUser(int userId)
     {
         var requestedUser = _userService.GetUserById(userId);
 
@@ -69,18 +69,18 @@ public class FoodsController : ControllerBase
 
         try 
         {
-            var foods = _foodService.GetFoodsByUser(userId);
-            return Ok(foods);
+            var intakes = _intakeService.GetIntakesByUser(userId);
+            return Ok(intakes);
         }     
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving all foods for user with ID {userId}. {ex.Message}");
+            return BadRequest($"Error retrieving all intakes for user with ID {userId}. {ex.Message}");
         }
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
-    [HttpGet("{foodId}")]
-    public IActionResult GetFoodById(int foodId, int userId)
+    [HttpGet("{intakeId}")]
+    public IActionResult GetIntakeById(int intakeId, int userId)
     {
         var requestedUser = _userService.GetUserById(userId);
 
@@ -92,22 +92,22 @@ public class FoodsController : ControllerBase
 
         try
         {
-            var food = _foodService.GetFoodById(foodId, userId);
-            return Ok(food);
+            var intake = _intakeService.GetIntakeById(intakeId);
+            return Ok(intake);
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Food with ID: {foodId} was not found. {knfex.Message}");
+            return NotFound($"Intake with ID: {intakeId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error retrieving food with ID {foodId}. {ex.Message}");
+            return BadRequest($"Error retrieving intake with ID {intakeId}. {ex.Message}");
         }
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
-    [HttpPut("{foodId}")]
-    public IActionResult UpdateFood(int foodId, FoodCreateUpdateDto dto)
+    [HttpPut("{intakeId}")]
+    public IActionResult UpdateIntake(int intakeId, IntakeCreateUpdateDto dto)
     {
         if (!ModelState.IsValid)  { return BadRequest(ModelState); } 
 
@@ -116,38 +116,38 @@ public class FoodsController : ControllerBase
             
         try 
         {
-            _foodService.UpdateFood(foodId, dto);
-            return Ok("Food updated successfully.");
+            _intakeService.UpdateIntake(intakeId, dto);
+            return Ok("Intake updated successfully.");
         }     
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Food with ID {foodId} was not found. {knfex.Message}");
+            return NotFound($"Intake with ID {intakeId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error updating food with ID {foodId}. {ex.Message}");
+            return BadRequest($"Error updating intake with ID {intakeId}. {ex.Message}");
         }
     }
 
     [Authorize(Roles = Roles.Admin + "," + Roles.User)]
-    [HttpDelete("{foodId}")]
-    public IActionResult DeleteFood(int foodId, int userId)
+    [HttpDelete("{intakeId}")]
+    public IActionResult DeleteIntake(int intakeId, int userId)
     {
         if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
             { return Forbid(); }
 
         try
         {
-            _foodService.DeleteFood(foodId, userId);
-            return Ok("Food deleted successfully.");
+            _intakeService.DeleteIntake(intakeId);
+            return Ok("Intake deleted successfully.");
         }
         catch (KeyNotFoundException knfex)
         {
-            return NotFound($"Food with ID {foodId} was not found. {knfex.Message}");
+            return NotFound($"Intake with ID {intakeId} was not found. {knfex.Message}");
         }
         catch (Exception ex)
         {
-            return BadRequest($"Error deleting food with ID {foodId}. {ex.Message}");
+            return BadRequest($"Error deleting intake with ID {intakeId}. {ex.Message}");
         }
     }
 }

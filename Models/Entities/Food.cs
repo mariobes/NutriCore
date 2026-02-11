@@ -37,6 +37,9 @@ public class Food
     public double? Proteins { get; set; }
 
     [Required]
+    public double? Fiber { get; set; }
+
+    [Required]
     public double? Sugar { get; set; }
 
     [Required]
