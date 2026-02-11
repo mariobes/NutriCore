@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace NutriCore.API.Controllers;
 
 [ApiController]
-[Route("users/{userId}/meals")]
+[Route("Users/{userId}/meals")]
 public class MealsController : ControllerBase
 {
     private readonly IMealService _mealService;
@@ -75,7 +75,6 @@ public class MealsController : ControllerBase
         catch (Exception ex)
         {
             return BadRequest($"Error retrieving all meals for user with ID {userId}. {ex.Message}");
-
         }
     }
 

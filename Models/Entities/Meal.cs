@@ -20,6 +20,27 @@ public class Meal
     [Required]
     public List<MealIngredient> Ingredients { get; set; } = new List<MealIngredient>();
 
+    [Required]
+    public int TotalKilocalories { get; set; }
+
+    [Required]
+    public double TotalFats { get; set; }
+
+    [Required]
+    public double TotalCarbohydrates { get; set; }
+
+    [Required]
+    public double TotalProteins { get; set; }
+
+    [Required]
+    public double TotalFiber { get; set; }
+
+    [Required]
+    public double TotalSugar { get; set; }
+
+    [Required]
+    public double TotalSalt { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CreatedBy { get; set; } = Roles.User;
 }
