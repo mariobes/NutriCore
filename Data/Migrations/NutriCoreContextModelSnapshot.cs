@@ -41,6 +41,10 @@ namespace NutriCore.Data.Migrations
                         .IsRequired()
                         .HasColumnType("float");
 
+                    b.Property<double?>("Fiber")
+                        .IsRequired()
+                        .HasColumnType("float");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,8 +86,9 @@ namespace NutriCore.Data.Migrations
                         {
                             Id = 1,
                             Carbohydrates = 0.0,
-                            CreatedBy = "Admin",
+                            CreatedBy = "admin",
                             Fats = 91.0,
+                            Fiber = 0.0,
                             Image = "https://dx7csy7aghu7b.cloudfront.net/prods/7567722.webp",
                             Kilocalories = 822,
                             MeasurementQuantity = 100,
@@ -98,8 +103,9 @@ namespace NutriCore.Data.Migrations
                         {
                             Id = 2,
                             Carbohydrates = 4.5999999999999996,
-                            CreatedBy = "Admin",
+                            CreatedBy = "admin",
                             Fats = 3.6000000000000001,
+                            Fiber = 0.0,
                             Image = "https://prod-mercadona.imgix.net/images/40d2c64941b80f76dce672a3eab794a2.jpg?fit=crop&h=600&w=600",
                             Kilocalories = 63,
                             MeasurementQuantity = 100,
@@ -109,6 +115,175 @@ namespace NutriCore.Data.Migrations
                             Sugar = 4.5999999999999996,
                             UnitOfMeasurement = 1,
                             UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Carbohydrates = 0.0,
+                            CreatedBy = "admin",
+                            Fats = 11.1,
+                            Fiber = 0.0,
+                            Image = "https://prod-mercadona.imgix.net/images/bdad77c847511bc5d6fa8e5fcc533823.jpg?fit=crop&h=600&w=600",
+                            Kilocalories = 150,
+                            MeasurementQuantity = 100,
+                            Name = "Huevos",
+                            Proteins = 12.5,
+                            Salt = 0.35999999999999999,
+                            Sugar = 0.0,
+                            UnitOfMeasurement = 0,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Carbohydrates = 0.0,
+                            CreatedBy = "admin",
+                            Fats = 15.0,
+                            Fiber = 0.0,
+                            Image = "https://prod-mercadona.imgix.net/images/5513997f44d87852326a373071baec5b.jpg?fit=crop&h=300&w=300",
+                            Kilocalories = 268,
+                            MeasurementQuantity = 100,
+                            Name = "Jamón de Trevélez",
+                            Proteins = 33.0,
+                            Salt = 3.8999999999999999,
+                            Sugar = 0.0,
+                            UnitOfMeasurement = 0,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Carbohydrates = 12.4,
+                            CreatedBy = "admin",
+                            Fats = 0.0,
+                            Fiber = 2.2999999999999998,
+                            Image = "https://images.openfoodfacts.org/images/products/084/000/069/4713/front_es.9.400.jpg",
+                            Kilocalories = 62,
+                            MeasurementQuantity = 100,
+                            Name = "Patatas",
+                            Proteins = 1.8,
+                            Salt = 0.0,
+                            Sugar = 2.0,
+                            UnitOfMeasurement = 0,
+                            UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("NutriCore.Models.Intake", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConsumableId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConsumableType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("FoodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FoodQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MealId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalCarbohydrates")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalFats")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalFiber")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<int?>("TotalKilocalories")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<double?>("TotalProteins")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalSalt")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalSugar")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("MealId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Intakes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConsumableId = 3,
+                            ConsumableType = "food",
+                            Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FoodQuantity = 100,
+                            TotalCarbohydrates = 0.0,
+                            TotalFats = 11.1,
+                            TotalFiber = 0.0,
+                            TotalKilocalories = 150,
+                            TotalProteins = 12.5,
+                            TotalSalt = 0.35999999999999999,
+                            TotalSugar = 0.0,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConsumableId = 5,
+                            ConsumableType = "food",
+                            Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FoodQuantity = 100,
+                            TotalCarbohydrates = 12.4,
+                            TotalFats = 0.0,
+                            TotalFiber = 2.2999999999999998,
+                            TotalKilocalories = 62,
+                            TotalProteins = 1.8,
+                            TotalSalt = 0.0,
+                            TotalSugar = 2.0,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConsumableId = 1,
+                            ConsumableType = "meal",
+                            Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TotalCarbohydrates = 18.600000000000001,
+                            TotalFats = 15.6,
+                            TotalFiber = 2.2999999999999998,
+                            TotalKilocalories = 1323,
+                            TotalProteins = 25.100000000000001,
+                            TotalSalt = 1.53,
+                            TotalSugar = 3.0,
+                            UserId = 2
                         });
                 });
 
@@ -131,6 +306,27 @@ namespace NutriCore.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("TotalCarbohydrates")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalFats")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalFiber")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TotalKilocalories")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalProteins")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalSalt")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalSugar")
+                        .HasColumnType("float");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -142,9 +338,16 @@ namespace NutriCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedBy = "Admin",
+                            CreatedBy = "admin",
                             Image = "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg",
                             Name = "Huevos rotos con jamón",
+                            TotalCarbohydrates = 18.600000000000001,
+                            TotalFats = 15.6,
+                            TotalFiber = 2.2999999999999998,
+                            TotalKilocalories = 323,
+                            TotalProteins = 25.100000000000001,
+                            TotalSalt = 1.53,
+                            TotalSugar = 3.0,
                             UserId = 1
                         });
                 });
@@ -179,16 +382,23 @@ namespace NutriCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            FoodId = 1,
+                            FoodId = 3,
                             MealId = 1,
-                            Quantity = 10.0
+                            Quantity = 100.0
                         },
                         new
                         {
                             Id = 2,
-                            FoodId = 2,
+                            FoodId = 4,
                             MealId = 1,
-                            Quantity = 50.0
+                            Quantity = 30.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FoodId = 5,
+                            MealId = 1,
+                            Quantity = 150.0
                         });
                 });
 
@@ -288,6 +498,29 @@ namespace NutriCore.Data.Migrations
                             Role = "user",
                             Weight = 65
                         });
+                });
+
+            modelBuilder.Entity("NutriCore.Models.Intake", b =>
+                {
+                    b.HasOne("NutriCore.Models.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId");
+
+                    b.HasOne("NutriCore.Models.Meal", "Meal")
+                        .WithMany()
+                        .HasForeignKey("MealId");
+
+                    b.HasOne("NutriCore.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("Meal");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("NutriCore.Models.MealIngredient", b =>

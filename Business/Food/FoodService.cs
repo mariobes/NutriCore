@@ -15,7 +15,7 @@ public class FoodService : IFoodService
     public Food RegisterFood(FoodCreateUpdateDto dto)
     {
         var normalizedName = dto.Name.Trim().ToLower();
-        var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
+        var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName && f.CreatedBy == "user");
         if (registeredName != null)
         {
             throw new Exception("The name is already registered.");
@@ -32,6 +32,7 @@ public class FoodService : IFoodService
             Fats = dto.Fats,
             Carbohydrates = dto.Carbohydrates,
             Proteins = dto.Proteins,
+            Fiber = dto.Fiber,
             Sugar = dto.Sugar,
             Salt = dto.Salt
         };
@@ -83,7 +84,7 @@ public class FoodService : IFoodService
             var normalizedName = dto.Name.Trim().ToLower();
             if (!string.Equals(food.Name, normalizedName, StringComparison.OrdinalIgnoreCase))
             {
-                var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName);
+                var registeredName = _repository.GetEntities().FirstOrDefault(f => f.Name.ToLower() == normalizedName && f.CreatedBy == "user");
                 if (registeredName != null)
                 {
                     throw new Exception("The name is already registered.");
@@ -101,6 +102,7 @@ public class FoodService : IFoodService
         food.Fats = dto.Fats;
         food.Carbohydrates = dto.Carbohydrates;
         food.Proteins = dto.Proteins;
+        food.Fiber = dto.Fiber;
         food.Sugar = dto.Sugar;
         food.Salt = dto.Salt;
         _repository.UpdateEntity(food);

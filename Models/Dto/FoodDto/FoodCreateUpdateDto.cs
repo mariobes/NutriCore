@@ -39,6 +39,10 @@ public class FoodCreateUpdateDto
     [Range(0, int.MaxValue, ErrorMessage = "Proteins cannot be negative")]
     public double Proteins { get; set; }
 
+    [Required(ErrorMessage = "Fiber is required")]
+    [Range(0, int.MaxValue, ErrorMessage = "Fiber cannot be negative")]
+    public double Fiber { get; set; }
+
     [Required(ErrorMessage = "Sugar is required")]
     [Range(0, int.MaxValue, ErrorMessage = "Sugar cannot be negative")]
     public double Sugar { get; set; }
