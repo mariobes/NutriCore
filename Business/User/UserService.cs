@@ -126,6 +126,7 @@ public class UserService : IUserService
         }
 
         user.DailyWater = dailyWater;
+        user.DateDailyWater = DateTime.Now;
         _repository.UpdateEntity(user);
     }
 

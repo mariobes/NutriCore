@@ -12,7 +12,7 @@ using NutriCore.Data;
 namespace NutriCore.Data.Migrations
 {
     [DbContext(typeof(NutriCoreContext))]
-    [Migration("20260211130310_InitialCreate")]
+    [Migration("20260213180508_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -244,48 +244,17 @@ namespace NutriCore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConsumableId = 3,
+                            ConsumableId = 4,
                             ConsumableType = "food",
                             Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FoodQuantity = 100,
                             TotalCarbohydrates = 0.0,
-                            TotalFats = 11.1,
+                            TotalFats = 15.0,
                             TotalFiber = 0.0,
-                            TotalKilocalories = 150,
-                            TotalProteins = 12.5,
-                            TotalSalt = 0.35999999999999999,
+                            TotalKilocalories = 268,
+                            TotalProteins = 33.0,
+                            TotalSalt = 3.8999999999999999,
                             TotalSugar = 0.0,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ConsumableId = 5,
-                            ConsumableType = "food",
-                            Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FoodQuantity = 100,
-                            TotalCarbohydrates = 12.4,
-                            TotalFats = 0.0,
-                            TotalFiber = 2.2999999999999998,
-                            TotalKilocalories = 62,
-                            TotalProteins = 1.8,
-                            TotalSalt = 0.0,
-                            TotalSugar = 2.0,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ConsumableId = 1,
-                            ConsumableType = "meal",
-                            Date = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalCarbohydrates = 18.600000000000001,
-                            TotalFats = 15.6,
-                            TotalFiber = 2.2999999999999998,
-                            TotalKilocalories = 1323,
-                            TotalProteins = 25.100000000000001,
-                            TotalSalt = 1.53,
-                            TotalSugar = 3.0,
                             UserId = 2
                         });
                 });
@@ -346,7 +315,7 @@ namespace NutriCore.Data.Migrations
                             Name = "Huevos rotos con jamón",
                             TotalCarbohydrates = 18.600000000000001,
                             TotalFats = 15.6,
-                            TotalFiber = 2.2999999999999998,
+                            TotalFiber = 3.4500000000000002,
                             TotalKilocalories = 323,
                             TotalProteins = 25.100000000000001,
                             TotalSalt = 1.53,
@@ -438,6 +407,9 @@ namespace NutriCore.Data.Migrations
                     b.Property<double>("DailyWaterTarget")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("DateDailyWater")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -476,6 +448,7 @@ namespace NutriCore.Data.Migrations
                             DailyProteinTarget = 0.0,
                             DailyWater = 0.0,
                             DailyWaterTarget = 0.0,
+                            DateDailyWater = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@nutricore.com",
                             Height = 30,
                             Name = "Admin",
@@ -494,6 +467,7 @@ namespace NutriCore.Data.Migrations
                             DailyProteinTarget = 130.0,
                             DailyWater = 1.5,
                             DailyWaterTarget = 3.0,
+                            DateDailyWater = new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "mario@gmail.com",
                             Height = 170,
                             Name = "Mario",
