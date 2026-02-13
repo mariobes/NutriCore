@@ -26,6 +26,7 @@
   <ItemGroup>
     <None Update="Json\Data\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>Json\Data\%(Filename)%(Extension)</TargetPath>
     </None>
   </ItemGroup>
 
