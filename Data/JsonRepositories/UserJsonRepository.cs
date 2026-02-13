@@ -11,8 +11,21 @@ public class UserJsonRepository : IUserRepository
 
     public UserJsonRepository()
     {
-        var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _filePath = Path.Combine(basePath, "JsonData", "Users.json");
+        // var basePath = AppDomain.CurrentDomain.BaseDirectory;
+        // _filePath = Path.Combine(basePath, "JsonData", "Users.json");
+
+        var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData");
+
+        if (!Directory.Exists(basePath))
+            Directory.CreateDirectory(basePath);
+
+        _filePath = Path.Combine(basePath, "Users.json");
+
+        // si el archivo no existe, crea uno vacío
+        if (!File.Exists(_filePath))
+            File.WriteAllText(_filePath, "[]");
+
+        Console.WriteLine($"UserJsonRepository initialized with file path: {_filePath}");
 
         if (File.Exists(_filePath))
         {
