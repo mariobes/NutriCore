@@ -12,7 +12,7 @@ public class IntakeJsonRepository : IIntakeRepository
     public IntakeJsonRepository()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _filePath = Path.Combine(basePath, "Json", "Data", "Intakes.json");
+        _filePath = Path.Combine(basePath, "JsonData", "Intakes.json");
 
         if (File.Exists(_filePath))
         {
@@ -24,7 +24,7 @@ public class IntakeJsonRepository : IIntakeRepository
             }
             catch (Exception e)
             {
-                throw new Exception("An error occurred while reading the users file", e);
+                throw new Exception("An error occurred while reading the intakes file", e);
             }
         }
 
