@@ -10,4 +10,5 @@ public interface IMealService
     Meal GetMealById(int mealId, int userId);
     void UpdateMeal(int mealId, MealCreateUpdateDto dto);
     void DeleteMeal(int mealId, int userId);
+    List<Meal> SearchMeal(string query, int userId);
 }

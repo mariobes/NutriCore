@@ -150,4 +150,26 @@ public class MealsController : ControllerBase
             return BadRequest($"Error deleting meal with ID {mealId}. {ex.Message}");
         }
     }
+
+    [Authorize(Roles = Roles.Admin + "," + Roles.User)]
+    [HttpGet("search")]
+    public IActionResult SearchMeal(string query, int userId)
+    {
+        if (!_authService.HasAccessToResource(Convert.ToInt32(userId), null, HttpContext.User)) 
+            { return Forbid(); }
+
+        try
+        {
+            List<Meal> meals = _mealService.SearchMeal(query, userId);
+            return Ok(meals);
+        }
+        catch (KeyNotFoundException knfex)
+        {
+            return NotFound($"No meals were found matching the search: {query}. {knfex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error searching for meals with the search: {query}. {ex.Message}");
+        }
+    }
 }
