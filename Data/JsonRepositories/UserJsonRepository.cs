@@ -14,21 +14,35 @@ public class UserJsonRepository : IUserRepository
         // var basePath = AppDomain.CurrentDomain.BaseDirectory;
         // _filePath = Path.Combine(basePath, "JsonData", "Users.json");
 
-        var basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData");
+        var home = Environment.GetEnvironmentVariable("HOME");
+
+        string basePath;
+
+        if (!string.IsNullOrEmpty(home))
+        {
+            // Estamos en Azure
+            basePath = Path.Combine(home, "data", "NutriCore", "JsonData");
+        }
+        else
+        {
+            // Estamos en local
+            basePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "JsonData");
+        }
 
         if (!Directory.Exists(basePath))
             Directory.CreateDirectory(basePath);
 
         _filePath = Path.Combine(basePath, "Users.json");
 
-        // si el archivo no existe, crea uno vacío
         if (!File.Exists(_filePath))
             File.WriteAllText(_filePath, "[]");
 
+
+
         Console.WriteLine($"UserJsonRepository initialized with file path: {_filePath}");
 
-        if (File.Exists(_filePath))
-        {
+        // if (File.Exists(_filePath))
+        // {
             try
             {
                 string jsonString = File.ReadAllText(_filePath);
@@ -39,7 +53,7 @@ public class UserJsonRepository : IUserRepository
             {
                 throw new Exception("An error occurred while reading the users file", e);
             }
-        }
+        // }
 
         UserIdSeed = _users.Any() ? _users.Values.Max(u => u.Id) + 1 : 1;
     }
