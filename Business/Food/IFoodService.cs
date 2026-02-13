@@ -10,4 +10,5 @@ public interface IFoodService
     Food GetFoodById(int foodId, int userId);
     void UpdateFood(int foodId, FoodCreateUpdateDto dto);
     void DeleteFood(int foodId, int userId);
+    List<Food> SearchFood(string query, int userId);
 }

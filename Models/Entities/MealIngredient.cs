@@ -6,17 +6,20 @@ namespace NutriCore.Models;
 public class MealIngredient
 {
     [Key]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int Id { get; set; }
 
     [Required]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int MealId { get; set; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonIgnore]
     public Meal? Meal { get; set; }
 
     [Required]
     public int FoodId { get; set; }
 
+    [JsonIgnore]
     public Food? Food { get; set; }
 
     [Required]

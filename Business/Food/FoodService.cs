@@ -24,7 +24,7 @@ public class FoodService : IFoodService
         Food food = new Food
         {
             UserId = dto.UserId,
-            Name = dto.Name,
+            Name = dto.Name.Trim(),
             Image = dto.Image,
             UnitOfMeasurement = dto.UnitOfMeasurement,
             MeasurementQuantity = dto.MeasurementQuantity,
@@ -90,7 +90,7 @@ public class FoodService : IFoodService
                     throw new Exception("The name is already registered.");
                 }
 
-                food.Name = normalizedName;   
+                food.Name = dto.Name.Trim();   
             }
         }
 
@@ -122,5 +122,22 @@ public class FoodService : IFoodService
         }
 
         _repository.DeleteEntity(food);
+    }
+
+    public List<Food> SearchFood(string query, int userId)
+    {
+        var defaultFoods = 
+            _repository.GetFoodsByUser(1)
+                .Where(f => f.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(f => f.Id)
+                .ToList();
+
+        var userFoods = 
+            _repository.GetFoodsByUser(userId)
+                .Where(f => f.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(f => f.Id)
+                .ToList();
+
+        return userFoods.Concat(defaultFoods).ToList();
     }
 }

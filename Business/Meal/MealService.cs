@@ -43,7 +43,7 @@ public class MealService : IMealService
         var meal = new Meal
         {
             UserId = dto.UserId,
-            Name = normalizedName,
+            Name = dto.Name.Trim(),
             Image = dto.Image,
             Ingredients = ingredients
         };
@@ -102,7 +102,7 @@ public class MealService : IMealService
                 if (registeredName != null)
                     throw new Exception("The name is already registered.");
 
-                meal.Name = normalizedName;
+                meal.Name = dto.Name.Trim();
             }
         }
 
@@ -148,6 +148,23 @@ public class MealService : IMealService
         }
 
         _mealRepository.DeleteEntity(meal);
+    }
+
+    public List<Meal> SearchMeal(string query, int userId)
+    {
+        var defaultMeals = 
+            _mealRepository.GetMealsByUser(1)
+                .Where(m => m.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(m => m.Id)
+                .ToList();
+
+        var userMeals = 
+            _mealRepository.GetMealsByUser(userId)
+                .Where(m => m.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(m => m.Id)
+                .ToList();
+
+        return userMeals.Concat(defaultMeals).ToList();
     }
 
     private void CalculateMealTotals(Meal meal)
