@@ -19,4 +19,25 @@ public class MealCreateUpdateDto
     [Required(ErrorMessage = "At least one ingredient must be provided")]
     [MinLength(1, ErrorMessage = "At least one ingredient is required")]
     public List<MealIngredientCreateDto> Ingredients { get; set; } = new List<MealIngredientCreateDto>();
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total kilocalories cannot be negative")]
+    public int? TotalKilocalories { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total fats cannot be negative")]
+    public double? TotalFats { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total carbohydrates cannot be negative")]
+    public double? TotalCarbohydrates { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total proteins cannot be negative")]
+    public double? TotalProteins { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total fiber cannot be negative")]
+    public double? TotalFiber { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total sugar cannot be negative")]
+    public double? TotalSugar { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Total salt cannot be negative")]
+    public double? TotalSalt { get; set; }
 }

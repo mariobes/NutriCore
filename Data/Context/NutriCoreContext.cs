@@ -17,8 +17,8 @@ public class NutriCoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Name = "Admin", Email = "admin@nutricore.com", Password = "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", Age = 1, Height = 30, Weight = 1, Country = "España", DailyWater = 0, DailyKilocalorieTarget = 0, DailyFatTarget = 0, DailyCarbohydrateTarget = 0, DailyProteinTarget = 0, DailyWaterTarget = 0, Role = Roles.Admin },
-            new User { Id = 2, Name = "Mario", Email = "mario@gmail.com", Password = "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", Age = 24, Height = 170, Weight = 65, Country = "España", DailyWater = 1.5, DailyKilocalorieTarget = 2300, DailyFatTarget = 60, DailyCarbohydrateTarget = 160, DailyProteinTarget = 130, DailyWaterTarget = 3 }
+            new User { Id = 1, Name = "Admin", Email = "admin@nutricore.com", Password = "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", Age = 1, Height = 30, Weight = 1, Country = "España", DailyWater = 0, DateDailyWater = new DateTime(0001, 1, 1), DailyKilocalorieTarget = 0, DailyFatTarget = 0, DailyCarbohydrateTarget = 0, DailyProteinTarget = 0, DailyWaterTarget = 0, Role = Roles.Admin },
+            new User { Id = 2, Name = "Mario", Email = "mario@gmail.com", Password = "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", Age = 24, Height = 170, Weight = 65, Country = "España", DailyWater = 1.5, DateDailyWater = new DateTime(2026, 2, 11), DailyKilocalorieTarget = 2300, DailyFatTarget = 60, DailyCarbohydrateTarget = 160, DailyProteinTarget = 130, DailyWaterTarget = 3 }
         );
 
         modelBuilder.Entity<Food>().HasData(
@@ -30,7 +30,7 @@ public class NutriCoreContext : DbContext
         );
         
         modelBuilder.Entity<Meal>().HasData(
-            new Meal { Id = 1, UserId = 1, Name = "Huevos rotos con jamón", Image = "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg", TotalKilocalories = 323, TotalFats = 15.6, TotalCarbohydrates = 18.6, TotalProteins = 25.1, TotalFiber = 2.3, TotalSugar = 3, TotalSalt = 1.53, CreatedBy = "admin" }
+            new Meal { Id = 1, UserId = 1, Name = "Huevos rotos con jamón", Image = "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg", TotalKilocalories = 323, TotalFats = 15.6, TotalCarbohydrates = 18.6, TotalProteins = 25.1, TotalFiber = 3.45, TotalSugar = 3, TotalSalt = 1.53, CreatedBy = "admin" }
         );
 
         modelBuilder.Entity<MealIngredient>().HasData(
@@ -40,9 +40,7 @@ public class NutriCoreContext : DbContext
         );
 
         modelBuilder.Entity<Intake>().HasData(
-            new Intake { Id = 1, UserId = 2, ConsumableId = 3, ConsumableType = "food", Date = new DateTime(2026, 2, 11), FoodQuantity = 100, TotalKilocalories = 150, TotalFats = 11.1, TotalCarbohydrates = 0, TotalProteins = 12.5, TotalFiber = 0, TotalSugar = 0, TotalSalt = 0.36 },
-            new Intake { Id = 2, UserId = 2, ConsumableId = 5, ConsumableType = "food", Date = new DateTime(2026, 2, 11), FoodQuantity = 100, TotalKilocalories = 62, TotalFats = 0, TotalCarbohydrates = 12.4, TotalProteins = 1.8, TotalFiber = 2.3, TotalSugar = 2, TotalSalt = 0 },
-            new Intake { Id = 3, UserId = 2, ConsumableId = 1, ConsumableType = "meal", Date = new DateTime(2026, 2, 11), FoodQuantity = null, TotalKilocalories = 1323, TotalFats = 15.6, TotalCarbohydrates = 18.6, TotalProteins = 25.1, TotalFiber = 2.3, TotalSugar = 3, TotalSalt = 1.53 }
+            new Intake { Id = 1, UserId = 2, ConsumableId = 4, ConsumableType = "food", Date = new DateTime(2026, 2, 11), FoodQuantity = 100, TotalKilocalories = 268, TotalFats = 15, TotalCarbohydrates = 0, TotalProteins = 33, TotalFiber = 0, TotalSugar = 0, TotalSalt = 3.9 }
         );
     }
 

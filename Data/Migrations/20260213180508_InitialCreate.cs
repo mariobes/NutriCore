@@ -75,6 +75,7 @@ namespace NutriCore.Data.Migrations
                     Weight = table.Column<int>(type: "int", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DailyWater = table.Column<double>(type: "float", nullable: false),
+                    DateDailyWater = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DailyKilocalorieTarget = table.Column<double>(type: "float", nullable: false),
                     DailyFatTarget = table.Column<double>(type: "float", nullable: false),
                     DailyCarbohydrateTarget = table.Column<double>(type: "float", nullable: false),
@@ -171,26 +172,21 @@ namespace NutriCore.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Meals",
                 columns: new[] { "Id", "CreatedBy", "Image", "Name", "TotalCarbohydrates", "TotalFats", "TotalFiber", "TotalKilocalories", "TotalProteins", "TotalSalt", "TotalSugar", "UserId" },
-                values: new object[] { 1, "admin", "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg", "Huevos rotos con jamón", 18.600000000000001, 15.6, 2.2999999999999998, 323, 25.100000000000001, 1.53, 3.0, 1 });
+                values: new object[] { 1, "admin", "https://newluxbrand.com/recetas/wp-content/uploads/2023/04/Abril23_V55_huevosrotosconjamon_01.jpg", "Huevos rotos con jamón", 18.600000000000001, 15.6, 3.4500000000000002, 323, 25.100000000000001, 1.53, 3.0, 1 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Age", "Country", "DailyCarbohydrateTarget", "DailyFatTarget", "DailyKilocalorieTarget", "DailyProteinTarget", "DailyWater", "DailyWaterTarget", "Email", "Height", "Name", "Password", "Role", "Weight" },
+                columns: new[] { "Id", "Age", "Country", "DailyCarbohydrateTarget", "DailyFatTarget", "DailyKilocalorieTarget", "DailyProteinTarget", "DailyWater", "DailyWaterTarget", "DateDailyWater", "Email", "Height", "Name", "Password", "Role", "Weight" },
                 values: new object[,]
                 {
-                    { 1, 1, "España", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, "admin@nutricore.com", 30, "Admin", "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", "admin", 1 },
-                    { 2, 24, "España", 160.0, 60.0, 2300.0, 130.0, 1.5, 3.0, "mario@gmail.com", 170, "Mario", "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", "user", 65 }
+                    { 1, 1, "España", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@nutricore.com", 30, "Admin", "dSvr3S6iXPjFcyMth0rbwQ==.u/1Q7+g3u40Ri7bJuIF22ABJzTPhcFsO2X5kTKCnObw=", "admin", 1 },
+                    { 2, 24, "España", 160.0, 60.0, 2300.0, 130.0, 1.5, 3.0, new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "mario@gmail.com", 170, "Mario", "4HsR7ujr1mOgg8fgDi0T/A==.E4PTkbfOEjDLf2f6FsoelJuUUFeqq1/H2sdeitKpb7E=", "user", 65 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Intakes",
                 columns: new[] { "Id", "ConsumableId", "ConsumableType", "Date", "FoodId", "FoodQuantity", "MealId", "TotalCarbohydrates", "TotalFats", "TotalFiber", "TotalKilocalories", "TotalProteins", "TotalSalt", "TotalSugar", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 3, "food", new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 100, null, 0.0, 11.1, 0.0, 150, 12.5, 0.35999999999999999, 0.0, 2 },
-                    { 2, 5, "food", new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 100, null, 12.4, 0.0, 2.2999999999999998, 62, 1.8, 0.0, 2.0, 2 },
-                    { 3, 1, "meal", new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, 18.600000000000001, 15.6, 2.2999999999999998, 1323, 25.100000000000001, 1.53, 3.0, 2 }
-                });
+                values: new object[] { 1, 4, "food", new DateTime(2026, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 100, null, 0.0, 15.0, 0.0, 268, 33.0, 3.8999999999999999, 0.0, 2 });
 
             migrationBuilder.InsertData(
                 table: "MealIngredients",
