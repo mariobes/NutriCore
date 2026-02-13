@@ -33,6 +33,9 @@ public class User // Ideal quitar required y ? para poner = ""; (Pero creo que e
     public double DailyWater { get; set; }
 
     [Required]
+    public DateTime DateDailyWater { get; set; }
+
+    [Required]
     public double DailyKilocalorieTarget { get; set; }
 
     [Required]
