@@ -37,7 +37,7 @@ if (!useJson)
     builder.Services.AddScoped<IMealRepository, MealEFRepository>();
     builder.Services.AddScoped<IIntakeRepository, IntakeEFRepository>();
 
-    var connectionString = builder.Configuration.GetConnectionString("ServerDB_dockernet");
+    var connectionString = builder.Configuration.GetConnectionString("ServerDB_azure");
     builder.Services.AddDbContext<NutriCoreContext>(options => options.UseSqlServer(connectionString));
 }
 else
