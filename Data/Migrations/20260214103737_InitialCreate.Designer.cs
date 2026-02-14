@@ -12,7 +12,7 @@ using NutriCore.Data;
 namespace NutriCore.Data.Migrations
 {
     [DbContext(typeof(NutriCoreContext))]
-    [Migration("20260213180508_InitialCreate")]
+    [Migration("20260214103737_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
