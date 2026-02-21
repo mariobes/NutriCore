@@ -14,8 +14,8 @@ public class MealJsonRepository : IMealRepository
     public MealJsonRepository()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _mealPath = Path.Combine(basePath, "Json", "Data", "Meals.json");
-        _foodPath = Path.Combine(basePath, "Json", "Data", "Foods.json");
+        _mealPath = Path.Combine(basePath, "Json", "Data", "meals.json");
+        _foodPath = Path.Combine(basePath, "Json", "Data", "foods.json");
 
         if (File.Exists(_mealPath))
         {

@@ -12,7 +12,7 @@ public class IntakeJsonRepository : IIntakeRepository
     public IntakeJsonRepository()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _filePath = Path.Combine(basePath, "Json", "Data", "Intakes.json");
+        _filePath = Path.Combine(basePath, "Json", "Data", "intakes.json");
 
         if (File.Exists(_filePath))
         {

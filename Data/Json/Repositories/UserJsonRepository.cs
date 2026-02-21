@@ -12,7 +12,7 @@ public class UserJsonRepository : IUserRepository
     public UserJsonRepository()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _filePath = Path.Combine(basePath, "Json", "Data", "Users.json");
+        _filePath = Path.Combine(basePath, "Json", "Data", "users.json");
 
         if (File.Exists(_filePath))
         {
