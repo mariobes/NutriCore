@@ -12,7 +12,7 @@ public class FoodJsonRepository : IFoodRepository
     public FoodJsonRepository()
     {
         var basePath = AppDomain.CurrentDomain.BaseDirectory;
-        _filePath = Path.Combine(basePath, "Json", "Data", "Foods.json");
+        _filePath = Path.Combine(basePath, "Json", "Data", "foods.json");
 
         if (File.Exists(_filePath))
         {
