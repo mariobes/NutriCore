@@ -36,20 +36,4 @@ public class JsonsController : ControllerBase
             return BadRequest($"Error reading the file {fileName.ToLower()}.json. {ex.Message}");
         }
     }
-
-    [Authorize(Roles = Roles.Admin)]
-    [HttpPost("{fileName}")]
-    public IActionResult SaveJson(string fileName, [FromBody] string jsonData)
-    {
-        var path = Path.Combine(_env.ContentRootPath, "Json", "Data", $"{fileName}.json");
-
-        var jsonString = System.Text.Json.JsonSerializer.Serialize(jsonData, new System.Text.Json.JsonSerializerOptions
-        {
-            WriteIndented = true
-        });
-
-        System.IO.File.WriteAllText(path, jsonString);
-
-        return Ok(new { Message = "File saved successfully.", File = fileName });
-    }
 }
