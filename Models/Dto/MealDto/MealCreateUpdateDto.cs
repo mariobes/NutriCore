@@ -12,8 +12,6 @@ public class MealCreateUpdateDto
     [StringLength(100, ErrorMessage = "Name must be less than 30 characters")]
     public string? Name { get; set; }
 
-    [Required(ErrorMessage = "Image URL is required")]
-    [Url(ErrorMessage = "Image must be a valid URL")]
     public string? Image { get; set; }
 
     [Required(ErrorMessage = "At least one ingredient must be provided")]
